@@ -16,3 +16,5 @@ insert into guest values(default,'관리자','qkrtjdwo337@naver.com','instagram/
 insert into guest values(default,'홍길동','hdk1234@naver.com','',default,'192.168.0.10','잠시 방문함');
 
 select * from guest;
+
+select count(*) from guest;
