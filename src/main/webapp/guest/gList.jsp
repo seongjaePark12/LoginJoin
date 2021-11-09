@@ -28,7 +28,7 @@
 <div class="container">
   <table class="table table-borderless">
     <tr>
-      <td colspan="2" style="text-align:center;"><h2>방 명 록 리 스 트</h2></td>
+      <td colspan="2" style="text-align:center;"><h2>방명록리스트</h2></td>
     </tr>
     <tr>
       <td><a href="<%=request.getContextPath()%>/" class="btn btn-secondary">관리자</a></td>

@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>메인화면</title>
+  <title>메인화면입니다</title>
   <%@ include file="include/bs4.jsp" %>
   <style>
 	  .fakeimg {
