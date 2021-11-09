@@ -18,3 +18,5 @@ insert into guest values(default,'홍길동','hdk1234@naver.com','',default,'192
 select * from guest;
 
 select count(*) from guest;
+select * from guest order by idx desc limit 0,10;
+select * from guest order by idx desc limit 10,10;

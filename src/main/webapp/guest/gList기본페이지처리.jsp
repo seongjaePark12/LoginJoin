@@ -19,18 +19,12 @@
 	/* 이곳부터 페이징 처리변수 지정 시작 */
 	int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));		// 현재페이지 구하기
 	
-	int pageSize = 2; 									//1. 한 페이지 분량
+	int pageSize = 5; 									//1. 한 페이지 분량
 	int totRecCnt = dao.totRecCnt();   	//2. 총 레코드건수 구하기
 	int totPage = (totRecCnt % pageSize)==0 ? totRecCnt/pageSize : (totRecCnt/pageSize) + 1;	//3. 총 페이지 수 구하기
 	int startIndexNo = (pag - 1) * pageSize; //4. 현재페이지의 시작 index번호
 	int curScrStartNo = totRecCnt - startIndexNo;	// 5. 현재 화면에 보이는 방문소감 시작번호
 	/* 이곳까지 페이징 처리변수 지정 끝*/
-	
-	/*블록 페이징처리(블록의 크기를 이용하여, '현재페이지의 블록위치(curBlock)','마지막 블럭의 위치(lastBlock)'를 구한다)*/
-	int blockSize = 3;  // 한블록의 크기를 3개의 Page로본다( 사용자지정)
-  int curBlock = (pag - 1) / blockSize;		// 현재페이지의 블록위치
-  int lastBlock = (totPage % blockSize)==0 ? ((totPage / blockSize) - 1) : (totPage / blockSize);
-	/* 블록페이징 처리끝*/
 	
 	List<GuestVO> vos = dao.gList(startIndexNo, pageSize);		//(시작번호, 페이지분량)
 %>
@@ -156,30 +150,23 @@ curScrStartNo--;
 	} 
 %>
 </div>
-<!-- 블록 페이징처리 시작 -->
+<!-- 페이징처리 시작 -->
 	<div style="text-align:center;">
 <% if(pag != 1){ %>
-			[<a href="gList.jsp?pag=1" >첫페이지</a>]
+			<a href="gList.jsp?pag=1" class="btn btn-secondary btn-sm">첫페이지</a>
 <% } %>
-<% if(curBlock > 1){ %>
-			[<a href="gList.jsp?pag=<%=(curBlock-1)*blockSize + 1%>" >◀</a>]
+<% if(pag > 1){ %>
+			<a href="gList.jsp?pag=<%=pag-1%>" class="btn btn-secondary btn-sm">이전페이지</a>
 <% } %>
-<%
-	for(int i=(curBlock*blockSize)+1; i<=(curBlock*blockSize)+blockSize; i++){
-		if(i>totPage) break;
-		if(i == pag) out.println("<a href='gList.jsp?pag="+i+"'><font color='red'><b>"+i+"</b></font></a>");
-		else out.println("<a href='gList.jsp?pag="+i+"'>"+i+"</a>");
-	}
-%>
-<% if(curBlock < lastBlock){ %>
-			[<a href="gList.jsp?pag=<%=(curBlock+1)*blockSize + 1%>" >▶</a>]
+<%=pag %>Page / <%=totPage %>Pages
+<% if(pag < totPage){ %>
+			<a href="gList.jsp?pag=<%=pag+1%>" class="btn btn-secondary btn-sm">다음페이지</a>
 <% } %>
-
 <% if(pag != totPage){ %>
-			[<a href="gList.jsp?pag=<%=totPage %>">마지막페이지</a>]
+			<a href="gList.jsp?pag=<%=totPage %>" class="btn btn-secondary btn-sm">마지막페이지</a>
 <% } %>
 	</div>
-<!-- 블록 페이징처리 끝 -->
+<!-- 페이징처리 끝 -->
 <p><br/></p>
 <%@ include file="../include/footer.jsp" %>
 </body>
