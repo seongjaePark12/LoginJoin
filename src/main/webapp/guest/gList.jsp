@@ -27,7 +27,7 @@
 	/* 이곳까지 페이징 처리변수 지정 끝*/
 	
 	/*블록 페이징처리(블록의 크기를 이용하여, '현재페이지의 블록위치(curBlock)','마지막 블럭의 위치(lastBlock)'를 구한다)*/
-	int blockSize = 3;  // 한블록의 크기를 3개의 Page로본다( 사용자지정)
+	int blockSize = 5;  // 한블록의 크기를 3개의 Page로본다( 사용자지정)
   int curBlock = (pag - 1) / blockSize;		// 현재페이지의 블록위치
   int lastBlock = (totPage % blockSize)==0 ? ((totPage / blockSize) - 1) : (totPage / blockSize);
 	/* 블록페이징 처리끝*/
