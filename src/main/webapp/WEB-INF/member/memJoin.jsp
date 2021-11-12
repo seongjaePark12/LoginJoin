@@ -97,7 +97,7 @@
 <%@ include file="../../include/nav.jsp" %>
 	<p><br/></p>
 <div class="container" style="padding:30px">
-  <form name="myform" method="post" action="" class="was-validated">
+  <form name="myform" method="post" action="<%=request.getContextPath() %>/memJoinOk.mem" class="was-validated">
     <h2>회 원 가 입</h2>
     <br/>
     <div class="form-group">
