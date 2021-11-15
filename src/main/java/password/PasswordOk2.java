@@ -44,7 +44,7 @@ public class PasswordOk2 extends HttpServlet{
 		
 		// DB에 저장된 암호를 다시 복호화(디코딩) 시킨다.
 		long decPwd;
-		intPwd = Long.parseLong(strPwd);
+		intPwd = Long.parseLong(strPwd);		//DB에 넣었던 strPwd를 다시불러서 복호화를 위해 정수형으로 변환
 		decPwd = intPwd ^ key;
 		System.out.println("디코딩된 비밀번호 : "+ decPwd);		//복호화 되어서 기존 비밀번호와 비교
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`");

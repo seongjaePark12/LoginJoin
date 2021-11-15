@@ -51,4 +51,53 @@ public class MemberDAO {
 		}
 		return name;
 	}
+
+	// hashTable에서 pwdKey에 해당하는 pwdValue을 찾아서 돌려준다
+	public long getHashTableSearch(int pwdKey) {
+		long pwdValue = 0;
+		try {
+			sql = "select * from hashTable where pwdKey = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pwdKey);
+			rs = pstmt.executeQuery();
+			rs.next();
+			pwdValue = rs.getLong("pwdValue");
+		} catch (SQLException e) {
+			System.out.println("sql오류 : " + e.getMessage());
+		}finally {
+			getConn.rsClose();
+		}
+		return pwdValue;
+	}
+
+	// 신규 회원 가입처리
+	public int setMemberJoinOk(MemberVO vo) {
+		int res = 0;
+		try {
+			sql = "insert into member values (default,?,?,?,?,?,?,?,?,?,?,?,?,?,default,?,?,default,default,default,default,default,default)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getMid());
+			pstmt.setString(2, vo.getPwd());
+			pstmt.setInt(3, vo.getPwdKey());
+			pstmt.setString(4, vo.getNickName());
+			pstmt.setString(5, vo.getName());
+			pstmt.setString(6, vo.getGender());
+			pstmt.setString(7, vo.getBirthday());
+			pstmt.setString(8, vo.getTel());
+			pstmt.setString(9, vo.getAddress());
+			pstmt.setString(10, vo.getEmail());
+			pstmt.setString(11, vo.getHomePage());
+			pstmt.setString(12, vo.getJob());
+			pstmt.setString(13, vo.getHobby());
+			pstmt.setString(14, vo.getContent());
+			pstmt.setString(15, vo.getUserInfor());
+			pstmt.executeUpdate();
+			res = 1;
+		} catch (SQLException e) {
+			System.out.println("sql오류 : " + e.getMessage());
+		}finally {
+			getConn.rsClose();
+		}
+		return res;
+	}
 }

@@ -13,7 +13,7 @@ public class URLMappingUpdateOkCommand implements URLInterface {
 		String name = request.getParameter("name")==null ? "" : request.getParameter("name");
 		int age = request.getParameter("age")==null ? 20 : Integer.parseInt(request.getParameter("age"));
 		int idx = Integer.parseInt(request.getParameter("idx"));
-		
+	
 		userDAO dao = new userDAO();
 		userVO vo = new userVO();
 		

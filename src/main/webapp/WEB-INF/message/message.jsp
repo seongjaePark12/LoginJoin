@@ -19,6 +19,12 @@
   	else if(msg == "userInputNo") msg = "정보가 입력되지 않았습니다";
   	else if(msg == "userUpdateOk") msg = "정보가 수정 되었습니다";
   	else if(msg == "userUpdateNo") msg = "정보가 수정되지 않았습니다";
+  	else if(msg == "memberJoinOk") msg = "회원가입 되었습니다";
+  	else if(msg == "memberJoinNo") msg = "회원가입에 실패 하였습니다";
+  	else if(msg == "memberDeleteOk") msg = "회원 정보가 삭제되었습니다.";
+  	else if(msg == "memberDeleteNo") msg = "회원 정보가 삭제되지 않았습니다.";
+  	else if(msg == "memberUpdateOk") msg = "회원정보가 수정되었습니다.^.^.";
+  	else if(msg == "memberUpdateNo") msg = "회원정보가 수정되지 않았습니다.ㅜㅜ.";
   	
   	alert(msg);
   	if(url != "") location.href = url;
