@@ -18,22 +18,26 @@ create table member(
 	photo varchar(100) default 'noimage.jpg',	/* 회원 프로필사진 */
 	content text,															/* 자기소개	*/
 	userInfor char(6) default '공개',
-	userDel char(2) default 'NO',		/* 회원 탈퇴 신청 여주(OK:탈퇴신청한회원, NO: 현재가입중인회원)	*/
+	userDel char(2) default 'NO',		/* 회원 탈퇴 신청 여부(OK:탈퇴신청한회원, NO: 현재가입중인회원)	*/
 	point int default 100,					/* 포인트(최초가입회원은 100, 한번 방문시마다 10)	*/
 	level	int default 1,						/* 1:준회원, 2:정회원, 3:우수회원, 4:운영자, 0:관리자	*/
 	visitCnt int default 0,					/* 방문횟수 */
 	startDate datetime default now(),	/* 최초 가입일 */
 	lastDate datetime default now(),	/* 마지막 접속일 */
+	todayCnt int default 0,						/* 오늘 방문한 횟수	*/
 	primary key(idx, mid)							/* 기본키 : 고유번호,아이디	*/
 );
 
 desc member;
 
+alter table member add column todayCnt int default 0;
+
 insert into member values(default,'admin','1234',1,'관리맨','관리자',default,default,010-1004-1004,'경기도 수원시',
 'admin1234@naver.com','blog.daum.net/1234','프리랜서','등산/바둑',
-default,'관리자입니다',default,default,default,default,default,default,default);
+default,'관리자입니다',default,default,default,default,default,default,default,default);
 
 update member set level = 0 where mid = 'admin';
+update member set pwd = '16708374', pwdKey=9, tel='010/1004/1004', address='경기도 안산시///' where mid = 'admin';
 delete from member where mid='hkd1234';
 
 select * from member;

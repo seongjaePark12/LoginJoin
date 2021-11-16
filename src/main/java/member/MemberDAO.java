@@ -74,7 +74,7 @@ public class MemberDAO {
 	public int setMemberJoinOk(MemberVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into member values (default,?,?,?,?,?,?,?,?,?,?,?,?,?,default,?,?,default,default,default,default,default,default)";
+			sql = "insert into member values (default,?,?,?,?,?,?,?,?,?,?,?,?,?,default,?,?,default,default,default,default,default,default,default)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getPwd());
@@ -96,8 +96,87 @@ public class MemberDAO {
 		} catch (SQLException e) {
 			System.out.println("sql오류 : " + e.getMessage());
 		}finally {
-			getConn.rsClose();
+			getConn.pstmtClose();
 		}
 		return res;
+	}
+
+	// 로그인(아이디가 동일한 자료가 있으면 해당자료를 vo에 담아서 넘긴다) 
+	public MemberVO loginCheck(String mid) {
+		vo = new MemberVO();
+		try {
+			sql = "select * from member where mid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				vo.setMid(mid);
+				vo.setPwd(rs.getString("pwd"));
+				vo.setPwdKey(rs.getInt("pwdKey"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setLevel(rs.getInt("level"));
+				vo.setLastDate(rs.getString("lastDate"));
+				vo.setPoint(rs.getInt("point"));
+				vo.setTodayCnt(rs.getInt("todayCnt"));
+				
+				// 회원 정보수정을 위해서 member.sql에 있는 모든 정보를 담아서 넘겨준다
+				vo.setName(rs.getString("name"));
+				vo.setEmail(rs.getString("email"));
+				vo.setGender(rs.getString("gender"));
+				vo.setBirthday(rs.getString("birthday"));
+				vo.setTel(rs.getString("tel"));
+				vo.setAddress(rs.getString("address"));
+				vo.setHomePage(rs.getString("homePage"));
+				vo.setJob(rs.getString("job"));
+				vo.setHobby(rs.getString("hobby"));
+				vo.setContent(rs.getString("content"));
+				vo.setUserInfor(rs.getString("userInfor"));
+			}
+			else {
+				vo = null;
+			}
+		} catch (SQLException e) {
+			System.out.println("..sql오류 : " + e.getMessage());
+		}finally {
+			getConn.rsClose();
+		}
+		return vo;
+	}
+
+	public void setLastDateUpdate(String mid, int newPoint, int todayCnt) {
+		try {
+			sql = "update member set lastDate = now(), point = point + ?, visitCnt = visitCnt + 1, todayCnt = ? where mid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, newPoint);
+			pstmt.setInt(2, todayCnt);
+			pstmt.setString(3, mid);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+	}
+
+	public MemberVO getUserInfor(String mid) {
+		vo = new MemberVO();
+		try {
+			sql = "select * from member where mid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			rs.next();
+			
+			vo.setVisitCnt(rs.getInt("visitCnt"));
+			vo.setTodayCnt(rs.getInt("todayCnt"));
+			vo.setPoint(rs.getInt("point"));
+			vo.setName(rs.getString("name"));
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return vo;
 	}
 }
