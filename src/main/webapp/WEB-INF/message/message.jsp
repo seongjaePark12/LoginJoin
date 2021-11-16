@@ -26,7 +26,7 @@
   	else if(msg == "memberLogoutOk") msg = "로그아웃되셨습니다";
   	else if(msg == "memberLoginPwdNO") msg = "비밀번호를 확인하세요";
   	else if(msg == "memberDeleteOk") msg = "회원 정보가 삭제되었습니다.";
-  	else if(msg == "memberDeleteNo") msg = "회원 정보가 삭제되지 않았습니다.";
+  	//else if(msg == "memberDeleteNo") msg = "회원 정보가 삭제되지 않았습니다.";
   	else if(msg == "memberUpdateOk") msg = "회원정보가 수정되었습니다.^.^.";
   	else if(msg == "memberUpdateNo") msg = "회원정보가 수정되지 않았습니다.ㅜㅜ.";
   	

@@ -29,16 +29,21 @@
 	//전화번호
 	String[] tel = vo.getTel().split("/");
 	String tel1 =  tel[0];
-	String tel2 =  tel[1];
-	String tel3 =  tel[2];
+	String tel2 = (tel.length >= 2) ? tel[1] : " ";
+	String tel3 = (tel.length >= 3) ? tel[2] : " ";
 	
 	//주소
 	String[] address = vo.getAddress().split("/");
 	
-	String address1 = address[0];
-	String address2 = address[1];
-	String address3 = address[2];
-	String address4 = address[3];
+	String address1 = address[0].trim();
+	String address2 = address[1].trim();
+	String address3 = address[2].trim();
+	String address4 = address[3].trim();
+	
+	// 취미
+	String[] hobby = {"등산","낚시","수영","독서","영화감상","바둑","축구","기타"};
+	String[] hobbys = vo.getHobby().split("/");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -49,8 +54,9 @@
   <!-- 아래는 다음주소 API를 활용한 우편번호검색 -->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="<%=request.getContextPath()%>/js/woo.js"></script>
-  <script>
+ <script>
   	var nickCheckOn = 0;
+  	var nickCheckSw = 0;
   
   	// 닉네임 중복체크
     function nickCheck() {
@@ -63,6 +69,7 @@
     	}
     	else {
     		nickCheckOn = 1;
+    		nickCheckSw = 1;
     		window.open(url,"nWin","width=500px,height=250px");
     	}
     }
@@ -96,11 +103,11 @@
     	}
     	// 기타 추가 체크해야 할 항목들을 모두 체크하세요.
     	else {
-    		if(nickCheckOn == 1) {
-    			var postcode = myform.postcode.value;
-    			var roadAddress = myform.roadAddress.value;
-    			var detailAddress = myform.detailAddress.value;
-    			var extraAddress = myform.extraAddress.value;
+    		if(nickCheckOn == 1 || nickCheckSw == 0) {
+    			var postcode = myform.postcode.value + " ";
+    			var roadAddress = myform.roadAddress.value + " ";
+    			var detailAddress = myform.detailAddress.value + " ";
+    			var extraAddress = myform.extraAddress.value + " ";
     			myform.address.value = postcode + "/" + roadAddress + "/" + detailAddress + "/" + extraAddress
     			myform.submit();
     		}
@@ -118,12 +125,12 @@
 <%@ include file="../../include/nav.jsp" %>
 	<p><br/></p>
 <div class="container" style="padding:30px">
-  <form name="myform" method="post" action="<%=request.getContextPath() %>/memJoinOk.mem" class="was-validated">
+  <form name="myform" method="post" action="<%=request.getContextPath() %>/memUpdateOk.mem" class="was-validated">
     <h2>회 원 정 보 수 정</h2>
     <br/>
     <div class="form-group">
       <label for="mid">아이디 : </label>
-      <input type="text" class="form-control" id="mid" value="${sMid }" name="mid" readonly />
+      <input type="text" class="form-control" value="${sMid }"readonly />
     </div>
     <div class="form-group">
       <label for="pwd">비밀번호 :</label>
@@ -210,22 +217,23 @@
     <div class="form-group">
       <label for="name">직업 :</label>
       <select class="form-control" id="job" name="job">
-        <option>학생</option>
-        <option>회사원</option>
-        <option>공무원</option>
-        <option>군인</option>
-        <option>의사</option>
-        <option>법조인</option>
-        <option>세무인</option>
-        <option>자영업</option>
-        <option>기타</option>
+        <option <%if(vo.getJob().equals("학생")) {%>selected<%}%>>학생</option>
+        <option <%if(vo.getJob().equals("회사원")) {%>selected<%}%>>회사원</option>
+        <option <%if(vo.getJob().equals("공무원")) {%>selected<%}%>>공무원</option>
+        <option <%if(vo.getJob().equals("군인")) {%>selected<%}%>>군인</option>
+        <option <%if(vo.getJob().equals("의사")) {%>selected<%}%>>의사</option>
+        <option <%if(vo.getJob().equals("법조인")) {%>selected<%}%>>법조인</option>
+        <option <%if(vo.getJob().equals("세무인")) {%>selected<%}%>>세무인</option>
+        <option <%if(vo.getJob().equals("자영업")) {%>selected<%}%>>자영업</option>
+        <option <%if(vo.getJob().equals("기타")) {%>selected<%}%>>기타</option>
       </select>
     </div>
     <div class="form-group">
+    <!-- 
       <div class="form-check-inline">
         <span class="input-group-text">취미</span> &nbsp; &nbsp;
 			  <label class="form-check-label">
-			    <input type="checkbox" class="form-check-input" value="등산" name="hobby"/>등산
+			    <input type="checkbox" class="form-check-input" value="등산" name="hobby" />등산
 			  </label>
 			</div>
 			<div class="form-check-inline">
@@ -263,27 +271,44 @@
 			    <input type="checkbox" class="form-check-input" value="기타" name="hobby" checked/>기타
 			  </label>
 			</div>
+			-->
+취미
+<% for(int i=0; i<hobby.length; i++){ %>
+			<input type="checkbox" name="hobby" value="<%=hobby[i] %>"
+<%
+			for(int j=0; j<hobbys.length; j++){
+				if(hobby[i].equals(hobbys[j])){
+%>					
+					checked
+<%					
+					break;
+				}
+			}
+%>
+		 /><%=hobby[i] %>
+<%		}%>
     </div>
     <div class="form-group">
       <label for="content">자기소개</label>
-      <textarea rows="5" class="form-control" id="content" name="content"></textarea>
+      <textarea rows="5" class="form-control" id="content" name="content"><%=vo.getContent() %></textarea>
     </div>
     <div class="form-group">
       <div class="form-check-inline">
         <span class="input-group-text">정보공개</span>  &nbsp; &nbsp; 
 			  <label class="form-check-label">
-			    <input type="radio" class="form-check-input" name="userInfor" value="공개" checked/>공개
+			    <input type="radio" class="form-check-input" name="userInfor" value="공개" <%if(vo.getUserInfor().equals("공개")) { %>checked<%} %>/>공개
 			  </label>
 			</div>
 			<div class="form-check-inline">
 			  <label class="form-check-label">
-			    <input type="radio" class="form-check-input" name="userInfor" value="비공개"/>비공개
+			    <input type="radio" class="form-check-input" name="userInfor" value="비공개" <%if(vo.getUserInfor().equals("비공개")) { %>checked<%} %>/>비공개
 			  </label>
 			</div>
     </div>
-    <button type="button" class="btn btn-secondary" onclick="fCheck()">회원가입</button>
+    <button type="button" class="btn btn-secondary" onclick="fCheck()">회원정보수정</button>
     <button type="reset" class="btn btn-secondary">다시작성</button>
-    <button type="button" class="btn btn-secondary" onclick="location.href='<%=request.getContextPath()%>/memLogin.mem'">돌아가기</button>
+    <button type="button" class="btn btn-secondary" onclick="location.href='<%=request.getContextPath()%>/memMain.mem'">돌아가기</button>
+  	<input type="hidden" name="mid" value="${sMid}"/>
   </form>
 </div>
 	<br/>	
