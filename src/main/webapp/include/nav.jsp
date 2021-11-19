@@ -39,6 +39,7 @@
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/el2.st">EL학습2</a>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/jstl1.st">JSTL학습1</a>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/jstl2.st">JSTL학습2</a>
+		      <a class="dropdown-item" href="<%=request.getContextPath()%>/jstl3.st">JSTL학습3</a>
 		    </div>
       </li>
 <%		} %>      
@@ -49,7 +50,7 @@
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/memMain.mem">회원방</a>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/memUpdate.mem">회원정보변경</a>	
 <% 				if(level != 1){%>
-		      <a class="dropdown-item" href="<%=request.getContextPath()%>/memList.mem">회원리스트</a>
+		      <a class="dropdown-item" href="<%=request.getContextPath()%>/memList.ad">회원리스트</a>
 <%				} %>
 <%				if(level != 0){ %>
 		      <a class="dropdown-item" href="javascript:memberDel()">회원탈퇴</a>

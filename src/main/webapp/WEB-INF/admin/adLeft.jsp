@@ -13,11 +13,14 @@
   		parent.location.href="${ctp}/memLogOut.mem";
   	}
   </script>
+  <style>
+  	body{background-color: #ddd;}
+  </style>
 </head>
 <body>
 	<p><br/></p>
 	<div class="container">
-		<h3>관리자메뉴</h3>
+		<h3><a href="${ctp}/adContent.ad" target="adContent">관리자메뉴</a></h3>
 		<hr/>
 		<p><a href="${ctp}/adMemberList.ad" target="adContent">회원관리</a></p>
 		<hr/>
