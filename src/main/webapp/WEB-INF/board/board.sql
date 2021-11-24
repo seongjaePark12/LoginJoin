@@ -19,3 +19,10 @@ desc board;
 select * from board;
 alter table board change column goods good int default 0;
 insert into board values (default,'관리맨','게시판 서비스를 시작합니다.','qkrtjdwo337@naver.com','sj__619','이곳은 게시판입니다.',default,default,'123.123.123.123',default,'admin');
+
+select * from board where idx =20;
+/* 이전글 */
+select * from board where idx < 20 order by idx desc limit 1;
+/* 다음글 */
+select * from board where idx > 20 limit 1;
+select * from board order by idx desc;
