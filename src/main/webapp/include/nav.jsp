@@ -11,7 +11,7 @@
 		}
 	}
 </script>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+<nav class="navbar navbar-expand-sm bg-warning navbar-dark">
   <a class="navbar-brand" href="<%=request.getContextPath()%>/">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
@@ -23,7 +23,7 @@
       </li>
 <%		if(level != 99 && level != 1 ){ %>      
       <li class="nav-item">
-        <a class="nav-link" href="#">게시판</a>
+        <a class="nav-link" href="<%=request.getContextPath()%>/boList.bo">게시판</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">자료실</a>
@@ -40,6 +40,13 @@
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/jstl1.st">JSTL학습1</a>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/jstl2.st">JSTL학습2</a>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/jstl3.st">JSTL학습3</a>
+		    </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">학습실2</a>
+		    <div class="dropdown-menu">
+		      <a class="dropdown-item" href="<%=request.getContextPath()%>/ajax1.st">AJAX연습</a>
+		      <a class="dropdown-item" href="<%=request.getContextPath()%>/ajax2.st">AJAX연습2</a>
 		    </div>
       </li>
 <%		} %>      

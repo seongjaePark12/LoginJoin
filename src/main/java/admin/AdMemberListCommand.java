@@ -17,6 +17,7 @@ public class AdMemberListCommand implements AdminInterface {
 		int level = request.getParameter("level")==null ? 99 : Integer.parseInt(request.getParameter("level"));
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
 		
+		
 		MemberDAO dao = new MemberDAO();
 		
 		/* 이곳부터 페이징 처리변수 지정 시작 */

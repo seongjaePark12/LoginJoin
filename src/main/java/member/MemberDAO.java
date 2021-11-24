@@ -173,6 +173,9 @@ public class MemberDAO {
 			vo.setTodayCnt(rs.getInt("todayCnt"));
 			vo.setPoint(rs.getInt("point"));
 			vo.setName(rs.getString("name"));
+			
+			vo.setEmail(rs.getString("email"));
+			vo.setHomePage(rs.getString("homePage"));
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
@@ -385,6 +388,5 @@ public class MemberDAO {
 			getConn.pstmtClose();
 		}
 	}
-	
 	
 }
