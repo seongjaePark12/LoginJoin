@@ -58,13 +58,18 @@
   		nickCheckOn = 0;
   	}
     
-  	// 회원가입폼 체크
     function fCheck() {
     	var mid = myform.mid.value;
     	var pwd = myform.pwd.value;
     	var nickName = myform.nickName.value;
     	var name = myform.name.value;
     	var email1 = myform.email1.value;
+    	
+    	// 회원 사진 업로드
+    	var fName = myform.fName.value;
+    	var ext = fName.substring(fName.lastIndexOf(".")+1);	// 파일 확장자 발췌
+    	var uExt = ext.toUpperCase();
+    	var maxSize = 1024 * 1024 * 2;	// 업로드할 파일의 최대 용량은 2MByte로 한다.
     	
     	if(mid == "") {
     		alert("아이디를 입력하세요");
@@ -91,12 +96,33 @@
     		if(idCheckOn == 1 && nickCheckOn == 1) {
     			//alert("입력처리 되었습니다.!");
     			var postcode = myform.postcode.value + " ";
-    			var roadAddress = myform.roadAddress.value  + " ";
-    			var detailAddress = myform.detailAddress.value  + " ";
-    			var extraAddress = myform.extraAddress.value  + " ";
+    			var roadAddress = myform.roadAddress.value + " ";
+    			var detailAddress = myform.detailAddress.value + " ";
+    			var extraAddress = myform.extraAddress.value + " ";
     			myform.address.value = postcode + "/" + roadAddress + "/" + detailAddress + "/" + extraAddress
-    			myform.submit();
-    		}
+    			
+    			// 사진파일 업로드 체크
+    			if(fName.trim() == "") {
+		    		myform.photo.value = "noimage";
+		    	}
+    			else {
+			    	var fileSize = document.getElementById("file").files[0].size;
+			    	
+			    	if(uExt != "JPG" && uExt != "GIF" && uExt != "PNG") {
+			    		alert("업로드 가능한 파일은 'JPG/GIF/PNG");
+			    		return false;
+			    	}
+			    	else if(fName.indexOf(" ") != -1) {
+			    		alert("업로드할 파일명에는 공백을 포함하실수 없습니다.");
+			    		return false;
+			    	}
+			    	else if(fileSize > maxSize) {
+			    		alert("업로드할 파일의 크기는 2MByte 이하입니다.");
+			    		return false;
+			    	}
+    			}
+		    	myform.submit();
+  			}
     		else {
     			if(idCheckOn == 0) {
     				alert("아이디 중복체크버튼을 눌러주세요!");
@@ -114,7 +140,7 @@
 <%@ include file="../../include/nav.jsp" %>
 	<p><br/></p>
 <div class="container" style="padding:30px">
-  <form name="myform" method="post" action="<%=request.getContextPath() %>/memJoinOk.mem" class="was-validated">
+  <form name="myform" method="post" action="<%=request.getContextPath() %>/memJoinOk.mem" class="was-validated" enctype="MulTipart/form-data">
     <h2>회 원 가 입</h2>
     <br/>
     <div class="form-group">
@@ -277,9 +303,14 @@
 			  </label>
 			</div>
     </div>
+    <div class="form-group">
+    	회원 사진(파일용량:2MByte이내) :
+			<input type="file" name="fName" id="file" class="form-control-file border" />
+		</div>
     <button type="button" class="btn btn-secondary" onclick="fCheck()">회원가입</button>
     <button type="reset" class="btn btn-secondary">다시작성</button>
     <button type="button" class="btn btn-secondary" onclick="location.href='<%=request.getContextPath()%>/memLogin.mem'">돌아가기</button>
+ 		<input type="hidden" name="photo"/>
   </form>
 </div>
 	<br/>	

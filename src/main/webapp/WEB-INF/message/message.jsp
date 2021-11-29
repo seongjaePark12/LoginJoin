@@ -38,6 +38,9 @@
   	else if(msg == "boDeleteNo") msg = "게시글삭제 실패";
   	else if(msg == "boUpdateOk") msg = "게시글이 수정되었습니다";
   	else if(msg == "boUpdateNo") msg = "게시글수정 실패";
+  	else if(msg == "replyBoardInputOk") msg = "댓글이 등록되었습니다";
+  	else if(msg == "upLoad1Ok") msg = "파일저장완료";
+  	else if(msg == "upLoad1No") msg = "파일저장실패";
   	
   	alert(msg);
   	if(url != "") location.href = url;

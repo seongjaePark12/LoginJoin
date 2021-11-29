@@ -18,12 +18,13 @@ public class BoardDAO {
 	
 	private String sql ="";
 	BoardVO vo = null;
+	ReplyBoardVO replyVO = null;
 	
 	// 게시글 전체보기
 	public List<BoardVO> getBoardList(int startIndexNo, int pageSize) {
 		List<BoardVO> vos = new ArrayList<BoardVO>();
 		try {
-			sql = "select * from board order by idx desc limit ?,?";
+			sql = "select *,(select count(*) from replyBoard where boardIdx = board.idx) as replyCount from board order by idx desc limit ?,?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startIndexNo);
 			pstmt.setInt(2, pageSize);
@@ -49,6 +50,9 @@ public class BoardDAO {
 				vo.setHostIp(rs.getString("hostIp"));
 				vo.setGood(rs.getInt("good"));
 				vo.setMid(rs.getString("mid"));
+				
+				// 댓글의 개수를 구해서 replyCount vo변수에 담는다
+				vo.setReplyCount(rs.getInt("replyCount"));
 				
 				vos.add(vo);
 			}
@@ -364,6 +368,107 @@ public class BoardDAO {
 			getConn.rsClose();
 		}
 		return vos;
+	}
+
+	// 댓글 입력처리
+	public void replyInput(ReplyBoardVO replyVO) {
+		try {
+			sql = "insert into replyBoard values (default,?,?,?,default,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, replyVO.getBoardIdx());
+			pstmt.setString(2, replyVO.getMid());
+			pstmt.setString(3, replyVO.getNickName());
+			pstmt.setString(4, replyVO.getHostIp());
+			pstmt.setString(5, replyVO.getContent());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("sql에러" + e.getMessage());
+		}finally {
+			getConn.pstmtClose();
+		}
+	}
+
+	//댓글 내용 가져오기
+	public List<ReplyBoardVO> getReplyBoard(int idx) {
+		List<ReplyBoardVO> replyBoardVOS = new ArrayList<ReplyBoardVO>();
+		try {
+			sql = "select * from replyBoard where boardIdx = ? order by idx desc";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				replyVO = new ReplyBoardVO();
+				
+				replyVO.setIdx(rs.getInt("idx"));
+				replyVO.setBoardIdx(idx);
+				replyVO.setMid(rs.getString("mid"));
+				replyVO.setNickName(rs.getString("nickName"));
+				replyVO.setwDate(rs.getString("wDate"));
+				replyVO.setHostIp(rs.getString("hostIp"));
+				replyVO.setContent(rs.getString("content"));
+				
+				replyBoardVOS.add(replyVO);
+			}
+		} catch (SQLException e) {
+			System.out.println("sql에러" + e.getMessage());
+		}finally {
+			getConn.rsClose();
+		}
+		return replyBoardVOS;
+	}
+
+	//댓글 수정을 위한 댓글내역 가져오기
+	public String getReply(int idx) {
+		String replyContent = "";
+		try {
+			//sql ="select * from replyBoard where idx = ?";
+			sql ="select content from replyBoard where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			//replyContent = rs.getString("content");
+			replyContent = rs.getString(1);
+		} catch (SQLException e) {
+			System.out.println("sql에러" + e.getMessage());
+		}finally {
+			getConn.rsClose();
+		}
+		return replyContent;
+	}
+
+	
+	// 댓글 수정 처리하기
+	public void boReplyUpdateOk(int idx, String content, String hostIp) {
+		try {
+			sql = "update replyBoard set content = ?, hostIp = ?, wDate = now() where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, content);
+			pstmt.setString(2, hostIp);
+			pstmt.setInt(3, idx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("sql에러" + e.getMessage());
+		}finally {
+			getConn.pstmtClose();
+		}
+	}
+
+	// 댓글 삭제
+	public void setReplyDelete(int replyIdx) {
+		try {
+			sql = "delete from replyBoard where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, replyIdx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("sql에러" + e.getMessage());
+		}finally {
+			getConn.pstmtClose();
+		}
+		
 	}
 	
 	
