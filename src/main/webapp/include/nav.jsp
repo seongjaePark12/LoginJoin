@@ -26,7 +26,7 @@
         <a class="nav-link" href="<%=request.getContextPath()%>/boList.bo">게시판</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">자료실</a>
+        <a class="nav-link" href="<%=request.getContextPath()%>/pdsList.pds">자료실</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">학습실</a>
@@ -35,6 +35,7 @@
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/URLMapping.url">URL(확장자)매핑</a>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/URLMapping.url2">URL(확장자)매핑2</a>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/password">비밀번호암호화</a>
+		      <a class="dropdown-item" href="<%=request.getContextPath()%>/shaTest.st">SHA 암호화</a>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/el1.st">EL학습1</a>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/el2.st">EL학습2</a>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/jstl1.st">JSTL학습1</a>
@@ -49,6 +50,9 @@
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/ajax2.st">AJAX연습2</a>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/pdsTest1.st">PDS연습</a>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/pdsTest2.st">PDS연습2</a>
+		      <a class="dropdown-item" href="<%=request.getContextPath()%>/pdsTest3.st">PDS연습3</a>
+		      <a class="dropdown-item" href="<%=request.getContextPath()%>/dynamicForm.st">동적폼연습</a>
+		      <a class="dropdown-item" href="<%=request.getContextPath()%>/calendar.st">달력연습</a>
 		    </div>
       </li>
 <%		} %>      
@@ -57,6 +61,7 @@
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">마이페이지</a>
 		    <div class="dropdown-menu">
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/memMain.mem">회원방</a>
+		      <a class="dropdown-item" href="<%=request.getContextPath()%>/schedule.sc">일정관리</a>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/memUpdate.mem">회원정보변경</a>	
 <% 				if(level != 1){%>
 		      <a class="dropdown-item" href="<%=request.getContextPath()%>/memList.ad">회원리스트</a>

@@ -54,7 +54,7 @@
 			</div>
 		</form>
 		<hr/><br/>
-		<p><a href="#" class="btn btn-warning form-control">다운로드 폼으로 이동하기</a></p>
+		<p><a href="${ctp}/downLoad1.st" class="btn btn-warning form-control">다운로드 폼으로 이동하기</a></p>
 	</div>
 s	<br/>	
 <%@ include file="/include/footer.jsp" %>

@@ -45,7 +45,6 @@ public class MemJoinOkCommand implements MemberInterface {
 			hobby += hobbys[i] + "/";
 		}
 		hobby = hobby.substring(0, hobby.lastIndexOf("/"));
-		
 		String content = multipartRequest.getParameter("content")==null ? "": multipartRequest.getParameter("content");
 		
 		//회원 사진이 업로드 되었을때 처리

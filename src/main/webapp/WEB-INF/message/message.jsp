@@ -41,6 +41,14 @@
   	else if(msg == "replyBoardInputOk") msg = "댓글이 등록되었습니다";
   	else if(msg == "upLoad1Ok") msg = "파일저장완료";
   	else if(msg == "upLoad1No") msg = "파일저장실패";
+  	else if(msg == "fileDeleteOk") msg = "파일삭제완료";
+  	else if(msg == "fileDeleteNo") msg = "파일삭제실패";
+  	else if(msg == "pdsInputOk") msg = "자료 파일이 업로드 되었습니다";
+  	else if(msg == "pdsInputNo") msg = "자료 업로드 실패";
+  	else if(msg == "scContentOk") msg = "일정등록완료";
+  	else if(msg == "scContentNo") msg = "일정등록실패";
+  	else if(msg == "scDeleteOk") msg = "일정이 삭제되었습니다";
+  	else if(msg == "scDeleteNo") msg = "일정삭제실패";
   	
   	alert(msg);
   	if(url != "") location.href = url;
