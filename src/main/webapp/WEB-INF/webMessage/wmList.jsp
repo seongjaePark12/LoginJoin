@@ -8,6 +8,26 @@
   <meta charset="UTF-8">
   <title>wmList</title>
   <%@ include file="/include/bs4.jsp" %>
+  <script>
+  function msgDel(idx) {
+  	var ans = confirm("선택된 메세지를 삭제하시겠습니까?");
+  	if(!ans) return false;
+  	var query = {
+  			idx : idx,
+  			mFlag : 's'
+  	}
+  	
+  	$.ajax({
+  		type : "post",
+  		url  : "${ctp}/wmMsgDel.wm",
+  		data : query,
+  		success:function() {
+  			alert("메세지가 삭제되었습니다.");
+  			location.reload();
+  		}
+  	});
+  }
+  </script>
 </head>
 <body>
 	<p><br/></p>
@@ -35,10 +55,13 @@
 					</td>
 					<td>
 	          <a href="${ctp}/wmMessage.wm?mSw=6&idx=${vo.idx}&mFlag=${param.mFlag}">
-	            <c:if test="${sendSw == 's'}">(보낸메세지)${vo.title}</c:if>
-	            <c:if test="${sendSw != 's'}">${vo.title}</c:if>
+	            <c:if test="${vo.sendSw == 's' && mSw == 5}">(보낸메세지)${vo.title}</c:if>
+	            ${vo.title}
 	          </a>
 	          <c:if test="${vo.receiveSw=='n'}"><img src="${ctp}/images/new.gif"/></c:if>
+	          <c:if test="${mSw == 3}">
+	          	<a href="javascript:msgDel(${vo.idx})" class="badge badge-warning">삭제</a>
+	          </c:if>
         	</td>
 					<td>
 						<%-- ${fn:substring(vo.receiveDate,0,10)} --%>
