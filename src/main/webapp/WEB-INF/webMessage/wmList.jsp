@@ -9,6 +9,8 @@
   <title>wmList</title>
   <%@ include file="/include/bs4.jsp" %>
   <script>
+  setTimeout("location.reload()",1000*10)
+  
   function msgDel(idx) {
   	var ans = confirm("선택된 메세지를 삭제하시겠습니까?");
   	if(!ans) return false;
